@@ -5,9 +5,15 @@ let db
 export const connectDB = async() => {
     const client = new MongoClient(process.env.MONGO_URI)
 
-    db = client.db('posts')
+    db = client.db('LINKER')
 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
 }
 
-export {db}
+export const getDB = () => {
+  if (!db) {
+    throw new Error("Database not connected!");
+  }
+
+  return db;
+};
