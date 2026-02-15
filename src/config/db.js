@@ -25,12 +25,12 @@ let client;
 let db;
 
 export const connectDB = async () => {
-  if (db) return db; // reuse connection
+  if (db) return db;
 
   if (!client) {
     client = new MongoClient(process.env.MONGO_URI);
-    await client.connect(); // ❌ must await
-    db = client.db("LINKER"); // DB name
+    await client.connect();
+    db = client.db("LINKER");
     console.log("MongoDB Connected");
   }
 
