@@ -6,9 +6,10 @@ dotenv.config();
 
 const startServer = async () => {
   await connectDB()
+  const port = process.env.PORT || 5000;
 
-  app.listen(process.env.PORT, () => {
-    console.log(`LINKER server running is ${process.env.PORT}`);
+  app.listen(port, () => {
+    console.log(`LINKER server running is ${port}`);
   })
 }
 

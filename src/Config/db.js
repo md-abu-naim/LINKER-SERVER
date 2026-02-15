@@ -1,19 +1,43 @@
-import { MongoClient } from 'mongodb';
+// import { MongoClient } from 'mongodb';
 
-let db 
+// let db 
 
-export const connectDB = async() => {
-    const client = new MongoClient(process.env.MONGO_URI)
+// export const connectDB = async() => {
+//     const client = new MongoClient(process.env.MONGO_URI)
 
-    db = client.db('LINKER')
+//      db = client.db('LINKER')
 
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-}
+//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+// }
 
-export const getDB = () => {
-  if (!db) {
-    throw new Error("Database not connected!");
+// export const getDB = () => {
+//   if (!db) {
+//     throw new Error("Database not connected!");
+//   }
+
+//   return db;
+// };
+
+
+import { MongoClient } from "mongodb";
+
+let client;
+let db;
+
+export const connectDB = async () => {
+  if (db) return db; // reuse connection
+
+  if (!client) {
+    client = new MongoClient(process.env.MONGO_URI);
+    await client.connect(); // ❌ must await
+    db = client.db("LINKER"); // DB name
+    console.log("MongoDB Connected");
   }
 
+  return db;
+};
+
+export const getDB = () => {
+  if (!db) throw new Error("Database not connected!");
   return db;
 };

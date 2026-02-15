@@ -1,8 +1,14 @@
 import { getUserCollection } from "./user.model.js"
 
 
-// export const createUser = async() => {
+// export const createUser = async(req, res) => {
 //     const user = req.body
+//     console.log('user', user);
+
+//     const result = await getUserCollection.insertOne(user)
+//     console.log('result', result);
+
+//     res.send(result)
 // }
 
 
