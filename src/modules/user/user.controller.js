@@ -14,7 +14,8 @@ import { getUserCollection } from "./user.model.js"
 
 // Get all users from DB
 export const getUsers = async(req, res) => {
-    const users = await getUserCollection().find().toArray();
+    const usersCollection = await getUserCollection()
+    const users = await usersCollection.find().toArray();
     
     // res.json({
     //     success: true,
