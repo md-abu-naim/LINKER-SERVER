@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import router from "./routes/index.js";
 
 const app = express();
 
@@ -12,6 +13,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use("/", routes);
+app.use("/", router);
 
 export default app;
