@@ -2,6 +2,8 @@ import { getUserCollection } from "./user.model.js"
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
+
+// Create user in DB
 export const createUser = async (req, res) => {
     const collection = await getUserCollection()
     const { name, password, email, birth, gender, } = req.body
@@ -19,7 +21,7 @@ export const createUser = async (req, res) => {
 }
 
 
-// Login User
+// Login user
 export const loginUser = async (req, res) => {
     const collection = await getUserCollection()
     const { password, email } = req.body
@@ -55,5 +57,19 @@ export const getUsers = async (req, res) => {
     res.json({
         success: true,
         data: users
+    })
+}
+
+
+// Get user by id
+export const getUserByEmail = async(req, res) => {
+    const collection = await getUserCollection()
+    const {email} = req.params
+
+    const user = await collection.findOne({email})
+
+    res.json({
+        success:true,
+        data:user
     })
 }
