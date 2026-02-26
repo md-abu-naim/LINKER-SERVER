@@ -1,6 +1,8 @@
 import { getUserCollection } from "./user.model.js"
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import { ObjectId } from "mongodb"
+import { getPosts } from "../post/post.controller.js"
 
 
 // Create user in DB
@@ -71,5 +73,39 @@ export const getUserByEmail = async(req, res) => {
     res.json({
         success:true,
         data:user
+    })
+}
+
+
+// Update user by ID
+export const updateUser = async(req, res) => {
+    const collection = await getUserCollection()
+    const posts = await getPosts()
+    const user = req.body
+    const {id} = req.params
+    const idObj = {_id: new ObjectId(id)}
+    const options = {upsert: true}
+    
+    const updateDoc = {
+        $set:{
+            name: user.name,
+            email: user.email,
+            birth: user.birth,
+            gender: user.gender,
+            profile: user.profile,
+            cover: user.cover,
+            bio: user.bio,
+            school: user.school,
+            university: user.university,
+            work: user.work,
+            location: user.location,
+            currentCity: user.currentCity,
+           posts
+        }
+    }
+    const result = await collection.updateOne(idObj, updateDoc, options)
+    res.json({
+        success: true,
+        data: result
     })
 }
