@@ -63,7 +63,7 @@ export const getUsers = async (req, res) => {
 }
 
 
-// Get user by id
+// Get user by email
 export const getUserByEmail = async(req, res) => {
     const collection = await getUserCollection()
     const {email} = req.params
@@ -82,8 +82,8 @@ export const updateUser = async(req, res) => {
     const collection = await getUserCollection()
 
     const user = req.body
+    console.log("user from backend", user);
     const {email} = req.params
-    const options = {upsert: true}
     
     const updateDoc = {
         $set:{
@@ -102,7 +102,7 @@ export const updateUser = async(req, res) => {
         }
     }
 
-    const result = await collection.updateOne({email: email}, updateDoc, options)
+    const result = await collection.updateOne({email: email}, updateDoc)
 
     res.json({
         success: true,
