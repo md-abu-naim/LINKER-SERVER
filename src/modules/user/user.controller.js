@@ -1,18 +1,16 @@
 import { getUserCollection } from "./user.model.js"
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import { getPosts } from "../post/post.controller.js"
-import { getPostCollection } from "../post/post.model.js"
 
 
 // Create user in DB
 export const createUser = async (req, res) => {
     const collection = await getUserCollection()
-    const { name, password, email, birth, gender, } = req.body
+    const { name, birth, gender, email, password, bio, cover, profile, currentCity, location, school, university, work } = req.body
 
     const hassedPass = await bcrypt.hash(password, 10)
 
-    const newUser = { name, password: hassedPass, email, birth, gender }
+    const newUser = { name, birth, gender, email, password: hassedPass, bio, cover, profile, currentCity, location, school, university, work }
 
     const result = await collection.insertOne(newUser)
 
