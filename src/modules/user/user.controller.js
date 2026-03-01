@@ -12,10 +12,8 @@ export const createUser = async (req, res) => {
     const hassedPass = await bcrypt.hash(password, 10)
 
     const newUser = { name, birth, gender, email, password: hassedPass, bio, cover, profile, currentCity, location, school, work, university}
-    console.log(newUser);
 
     const result = await collection.insertOne(newUser)
-    console.log("result", result);
 
     res.json({
         success: true,
@@ -73,15 +71,16 @@ export const getUserByEmail = async(req, res) => {
 
     res.json({
         success:true,
-        data:user
+        data: user
     })
 }
 
 
 // Get user by id
 export const getUserById = async(req, res) =>{
-    const collection = getUserCollection()
-    const {id} = await req.params
+    const collection = await getUserCollection()
+    const {id} = req.params
+
     const user = await collection.findOne({_id: new ObjectId(id)})
 
     res.json({

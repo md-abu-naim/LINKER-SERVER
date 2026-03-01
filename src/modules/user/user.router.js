@@ -7,7 +7,7 @@ router.post('/', createUser)
 router.post('/login', loginUser)
 router.get('/', getUsers)
 router.get('/:email', getUserByEmail)
-router.get('/:id', getUserById)
+router.get('/user/:id', getUserById)
 router.put('/update/:id', updateUser)
 
 
