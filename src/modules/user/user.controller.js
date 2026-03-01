@@ -7,11 +7,11 @@ import { ObjectId } from "mongodb"
 // Create user in DB
 export const createUser = async (req, res) => {
     const collection = await getUserCollection()
-    const { name, birth, gender, email, password, bio, cover, profile, currentCity, location, school, work, university} = req.body
+    const { name, birth, gender, email, password, bio, cover, profile, currentCity, location, school, work, university } = req.body
 
     const hassedPass = await bcrypt.hash(password, 10)
 
-    const newUser = { name, birth, gender, email, password: hassedPass, bio, cover, profile, currentCity, location, school, work, university}
+    const newUser = { name, birth, gender, email, password: hassedPass, bio, cover, profile, currentCity, location, school, work, university }
 
     const result = await collection.insertOne(newUser)
 
@@ -63,25 +63,25 @@ export const getUsers = async (req, res) => {
 
 
 // Get user by email
-export const getUserByEmail = async(req, res) => {
+export const getUserByEmail = async (req, res) => {
     const collection = await getUserCollection()
-    const {email} = req.params
+    const { email } = req.params
 
-    const user = await collection.findOne({email})
+    const user = await collection.findOne({ email })
 
     res.json({
-        success:true,
+        success: true,
         data: user
     })
 }
 
 
 // Get user by id
-export const getUserById = async(req, res) =>{
+export const getUserById = async (req, res) => {
     const collection = await getUserCollection()
-    const {id} = req.params
+    const { id } = req.params
 
-    const user = await collection.findOne({_id: new ObjectId(id)})
+    const user = await collection.findOne({ _id: new ObjectId(id) })
 
     res.json({
         success: true,
@@ -91,15 +91,15 @@ export const getUserById = async(req, res) =>{
 
 
 // Update user by email
-export const updateUser = async(req, res) => {
+export const updateUser = async (req, res) => {
     const collection = await getUserCollection()
 
     const user = req.body
     console.log("user from backend", user);
-    const {id} = req.params
-    
+    const { id } = req.params
+
     const updateDoc = {
-        $set:{
+        $set: {
             name: user.name,
             email: user.email,
             birth: user.birth,
@@ -115,7 +115,7 @@ export const updateUser = async(req, res) => {
         }
     }
 
-    const result = await collection.updateOne({_id: new ObjectId(id)}, updateDoc)
+    const result = await collection.updateOne({ _id: new ObjectId(id) }, updateDoc)
 
     res.json({
         success: true,
