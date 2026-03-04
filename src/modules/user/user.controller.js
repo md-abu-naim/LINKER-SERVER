@@ -11,7 +11,7 @@ export const createUser = async (req, res) => {
 
     const hassedPass = await bcrypt.hash(password, 10)
 
-    const newUser = { name, birth, gender, email, password: hassedPass, bio, cover, profile, currentCity, location, school, work, university }
+    const newUser = { name, birth, gender, email, password: hassedPass, bio, cover, profile, currentCity, location, school, work, university, joined: new Date().toDateString()}
 
     const result = await collection.insertOne(newUser)
 
