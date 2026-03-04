@@ -93,29 +93,9 @@ export const getUserById = async (req, res) => {
 // Update user by email
 export const updateUser = async (req, res) => {
     const collection = await getUserCollection()
-
-    const user = req.body
-    console.log("user from backend", user);
     const { id } = req.params
 
-    const updateDoc = {
-        $set: {
-            name: user.name,
-            email: user.email,
-            birth: user.birth,
-            gender: user.gender,
-            profile: user.profile,
-            cover: user.cover,
-            bio: user.bio,
-            school: user.school,
-            university: user.university,
-            work: user.work,
-            location: user.location,
-            currentCity: user.currentCity,
-        }
-    }
-
-    const result = await collection.updateOne({ _id: new ObjectId(id) }, updateDoc)
+    const result = await collection.updateOne({ _id: new ObjectId(id) }, { $set: req.body })
 
     res.json({
         success: true,
