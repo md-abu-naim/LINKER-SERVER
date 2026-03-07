@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 
 export const verifyJWT = async (req, res, next) => {
-    const authHeader = req.headers.authorizatin
+    const authHeader = req.headers.authorization
 
     if (!authHeader) return res.status(401).json({ message: "Unauthorized" })
 
