@@ -1,6 +1,5 @@
 import express from 'express'
 import userRoutes from '../modules/user/user.router.js'
-import mediaRoutes from '../modules/media/media.router.js'
 import postRoutes from '../modules/post/post.router.js'
 
 const router = express.Router()
@@ -10,7 +9,6 @@ router.get('/', async (req, res) => {
 })
 
 router.use('/users', userRoutes)
-router.use('/media', mediaRoutes)
 router.use('/posts', postRoutes)
 
 export default router
