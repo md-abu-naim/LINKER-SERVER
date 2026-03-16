@@ -4,7 +4,7 @@ import { verifyJWT } from '../../middleware/verifyJWT.js'
 
 const router = express.Router()
 
-router.get('/', getPosts)
+router.get('/', verifyJWT, getPosts)
 router.post('/', verifyJWT, createPost)
 
 
