@@ -13,6 +13,18 @@ export const getPosts = async (req, res) => {
     })
 }
 
+// Get post from db using email
+export const getPostByEmail = async(req, res) => {
+    const collection = await getPostCollection()
+    const {email} = req.params
+    
+    const result = await collection.find({email}).toArray()
+    res.json({
+        success: true,
+        data: result
+    })
+} 
+
 // Save post in Database => 
 export const createPost = async (req, res) => {
     const collection = await getPostCollection()
