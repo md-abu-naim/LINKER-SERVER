@@ -2,16 +2,17 @@ import { getUserCollection } from "./user.model.js"
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { ObjectId } from "mongodb"
+import { getPostCollection } from "../post/post.model.js"
 
 
 // Create user in DB
 export const createUser = async (req, res) => {
     const collection = await getUserCollection()
-    const { name, birth, gender, email, password, bio, cover, profile, currentCity, location, school, work, university } = req.body
+    const { name, birth, gender, email, password, } = req.body
 
     const hassedPass = await bcrypt.hash(password, 10)
 
-    const newUser = { name, birth, gender, email, password: hassedPass, bio, cover, profile, currentCity, location, school, work, university, joined: new Date().toDateString() }
+    const newUser = { name, birth, gender, email, password: hassedPass, joined: new Date().toDateString() }
 
     const result = await collection.insertOne(newUser)
 
@@ -72,6 +73,25 @@ export const getUserByEmail = async (req, res) => {
     res.json({
         success: true,
         data: user
+    })
+}
+
+
+// Get user profile
+export const getUserProfile = async (req, res) => {
+    const userCollection = await getUserCollection()
+    const postCollection = await getPostCollection()
+
+    const { email } = req.params
+
+    const user = await userCollection.findOne({ email })
+    const postCount = await postCollection.countDocuments({
+        "author.email": email
+    })
+
+    res.json({
+        success: true,
+        data: { ...user, postCount }
     })
 }
 

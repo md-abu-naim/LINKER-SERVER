@@ -6,7 +6,7 @@ import { getPostCollection } from "./post.model.js"
 export const getPosts = async (req, res) => {
     const collection = await getPostCollection()
 
-    const posts = await collection.find().toArray()
+    const posts = await collection.find().sort({ createdAt: -1 }).toArray()
     res.json({
         success: true,
         data: posts
@@ -18,7 +18,7 @@ export const getPostsByEmail = async(req, res) => {
     const collection = await getPostCollection()
     const {email} = req.params
     
-    const result = await collection.find({"author.email": email}).toArray()
+    const result = await collection.find({"author.email": email}).sort({ createdAt: -1 }).toArray()
     res.json({
         success: true,
         data: result
